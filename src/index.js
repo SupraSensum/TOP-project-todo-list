@@ -1,7 +1,4 @@
-import loadHomePage from "./home-page.js";
+import localStorage from "./local-storage.js";
 import "./styles.css";
 
-const homeButton = document.getElementById("homeButton");
-
-loadHomePage();
-homeButton.addEventListener("click", () => loadHomePage());
+localStorage();
