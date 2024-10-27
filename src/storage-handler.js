@@ -61,3 +61,19 @@ export default class StorageHandler {
         return StorageHandler.#localStorageAvailable;
     }
 }
+
+// What does a single task object look like?
+const tasks = {
+    ["currentDateTime" + "name"]: {
+        title: "",
+        description: "",
+        dueDate: null,
+        priority: 0,
+        notes: "",
+        projects: [],
+        subtasks: {
+            // nested tasks? nah, keep it to one layer deep. this should become a class or something
+        },
+        completed: false,
+    }
+}
