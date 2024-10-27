@@ -1,5 +1,23 @@
 # TOP-project-restaurant-menu
 
+## What are we trying to show off here?
+
+- [ ] classes
+- [ ] ES6 modules
+  - [ ] import
+  - [ ] export
+  - [ ] default
+- [ ] npm
+  - [ ] basic CI/CD w/ npm scripts
+  - [ ] bundling w/ webpack
+    - [ ] prod vs dev modes
+    - [ ] asset management
+- [ ] json
+- [ ] oop principles
+- [ ] deploying to `gh-pages`
+
+## How to contribute
+
 ### Current Best Practice to Keep `gh-pages` up to date with `main`
 
 _Make sure to read the [npm scripts](https://github.com/SupraSensum/TOP-project-restaurant-menu/blob/main/package.json) themselves so you're not flying blind_
