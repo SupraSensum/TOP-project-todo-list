@@ -36,3 +36,6 @@ _Make sure to read the [npm scripts](https://github.com/SupraSensum/TOP-project-
     ```
     npm run deployPages
     ```
+
+## Random
+- Jump to [around 3h40m](https://youtube.com/live/MtU0hqes5do?feature=share) for a funny bit. I get stoked that something worked, Humi starts shorting hooray. Sadly, can't hear her hilarious "hooray".
