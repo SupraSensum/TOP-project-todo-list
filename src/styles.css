@@ -31,7 +31,7 @@ header .navButton {
     padding: 10px 20px;
     margin-top: 1em;
     border: none;
-    background-color: #33170D;
+    background-color: grey;
     color: #fff;
     border-radius: 8px 8px 0px 0px;
     font-size: 16px;
@@ -41,23 +41,9 @@ header .navButton {
 }
 
 header .navButton:hover {
-    background-color: #714434;
+    background-color: purple;
 }
 
 #content {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1em;
-}
-
-#content img:first-child {
-    width: clamp(300px, 100%, 100%);
-    place-self: center;
-    margin-bottom: 1em;
-    transition: width 0.2s;
-}
-
-#content > * {
-    margin-bottom: 1em;
-    padding: 0 12.5%;
+    
 }
