@@ -1,10 +1,9 @@
-import StorageHandler from "./storage-handler.js";
+import TaskHandler from "./task-handler.js";
 import "./styles.css";
 
 const DEBUG = true;
-const storageHandler = new StorageHandler();
+const taskHandler = new TaskHandler();
 
 if (DEBUG) {
-   window.StorageHandler = StorageHandler;
-   window.storageHandler = storageHandler;
+   window.taskHandler = taskHandler;
 }

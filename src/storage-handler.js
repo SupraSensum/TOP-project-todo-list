@@ -3,10 +3,6 @@ export default class StorageHandler {
 
     }
 
-    // 
-    // Static Properties
-    // 
-
     static #localStorageAvailable = false;
 
     static #checkStorageAvailability(value) { // detect local storage feature (https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#feature-detecting_localstorage)
@@ -30,9 +26,9 @@ export default class StorageHandler {
 
     static #verifyLocalStorageFunctionality() {
         localStorage.test = "If you're seeing this, local storage is working!";
-        console.log(localStorage.test);
+        console.debug(localStorage.test);
         localStorage.removeItem("test");
-        console.log("test JSON removed");
+        console.debug("test JSON removed");
     }
 
     static #initilize() {
@@ -53,27 +49,7 @@ export default class StorageHandler {
         return StorageHandler.#localStorageAvailable;
     }
 
-    // 
-    // Instance Properties
-    // 
-
-    get localStorageAvailable() {
-        return StorageHandler.#localStorageAvailable;
-    }
-}
-
-// What does a single task object look like?
-const tasks = {
-    ["currentDateTime" + "name"]: {
-        title: "",
-        description: "",
-        dueDate: null,
-        priority: 0,
-        notes: "",
-        projects: [],
-        subtasks: {
-            // nested tasks? nah, keep it to one layer deep. this should become a class or something
-        },
-        completed: false,
+    updateTasks(tasks) {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
     }
 }
