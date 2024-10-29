@@ -27,6 +27,15 @@ export default class TaskHandler {
       }
    }
 
+   #checkIfTaskAlreadyExists(uid) {
+      const taskAlreadyExists = TaskHandler.tasks[uid];
+      if (taskAlreadyExists) {
+         return taskAlreadyExists;
+      } else {
+         return false;
+      }
+   }
+
    createTask({
       title = '',
       description = '',
@@ -34,10 +43,8 @@ export default class TaskHandler {
       priority = null,
       notes = '',
       projects = [],
-      subtasks = {},
       completed = false,
    }) {
-      const uid = this.#createTaskUID(dueDate);
       const task = {
          title,
          description,
@@ -45,16 +52,14 @@ export default class TaskHandler {
          priority,
          notes,
          projects,
-         subtasks,
          completed,
       };
+      const uid = this.#createTaskUID(dueDate);
 
-      const taskAlreadyExists = TaskHandler.tasks[uid];
-      if (taskAlreadyExists) {
+      if (this.#checkIfTaskAlreadyExists(uid)) {
          alert(`Task UID: ${uid} already exists. Task was not created.`);
          console.error(`Task UID: ${uid} already exists.`);
          console.error(taskAlreadyExists);
-         return;
       } else {
          this.#addTaskToStorage(uid, task);
       }
@@ -65,8 +70,14 @@ export default class TaskHandler {
    }
 
    // update
-   updateTask(uid) {
-
+   updateTask(uid, task) {
+      if (this.#checkIfTaskAlreadyExists(uid)) {
+         this.#addTaskToStorage(uid, task);
+      } else {
+         alert(`Task UID: ${uid} does not exist. Task was not updated.`);
+         console.error(`Task UID: ${uid} does not exist.`);
+         console.error(task);
+      }
    }
 
    // delete
