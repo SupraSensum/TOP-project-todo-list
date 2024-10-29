@@ -13,23 +13,47 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #9CA49B;
+    display: flex;
+    justify-content: center;
+    border: 3px solid red;
+}
+
+#app {
+    display: grid;
+    grid-template-columns: minmax(200px, 300px) minmax(400px, 1fr);
+    grid-template-rows: 40px minmax(400px, 1fr) 40px;
+    grid-template-areas:
+    "header header"
+    "sidebar content"
+    "footer footer";
+    height: 100vh;
+    max-width: 1200px;
+    flex: 1 1 auto;
+}
+
+header,
+#sidebar,
+#content,
+footer {
+    border: 3px solid black;
 }
 
 header {
     display: flex;
     place-content: center;
+    grid-area: header;
 }
 
 nav {
     display: flex;
     width: clamp(300px, 75%, 100%);
-    justify-content: space-between;
+    justify-content: space-around;
     gap: 20px;
+    border: 3px solid green;
 }
 
 header .navButton {
     padding: 10px 20px;
-    margin-top: 1em;
     border: none;
     background-color: grey;
     color: #fff;
@@ -44,6 +68,14 @@ header .navButton:hover {
     background-color: purple;
 }
 
+#sidebar {
+    grid-area: sidebar;
+}
+
 #content {
-    
+    grid-area: content;
+}
+
+footer {
+    grid-area: footer;
 }
