@@ -19,7 +19,7 @@ export default class TaskHandler {
       return `${currentDateTime}-${dueDate.replace(/[^\w]/gi, '')}`;
    }
 
-   #addTaskToStorage(uid, task) {
+   #addTaskToStorage(uid, task) { // notice the singular 'task' and not 'tasks', lol
       TaskHandler.#tasks[uid] = task;
 
       if (StorageHandler.localStorageAvailable) {
