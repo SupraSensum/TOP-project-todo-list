@@ -27,12 +27,12 @@ export default class TaskHandler {
       }
    }
 
-   #checkIfTaskAlreadyExists(uid) {
-      const taskAlreadyExists = TaskHandler.tasks[uid];
-      if (taskAlreadyExists) {
-         return taskAlreadyExists;
-      } else {
-         return false;
+   #deleteTaskFromStorage(uid) {
+      if (TaskHandler.tasks[uid]) {
+         delete TaskHandler.tasks[uid];
+         if (StorageHandler.localStorageAvailable) {
+            localStorageHandler.updateTasks(TaskHandler.tasks);
+         }
       }
    }
 
@@ -56,10 +56,11 @@ export default class TaskHandler {
       };
       const uid = this.#createTaskUID(dueDate);
 
-      if (this.#checkIfTaskAlreadyExists(uid)) {
-         alert(`Task UID: ${uid} already exists. Task was not created.`);
-         console.error(`Task UID: ${uid} already exists.`);
-         console.error(taskAlreadyExists);
+      if (TaskHandler.tasks[uid]) {
+         msg`Task UID: ${uid} already exists. Task was not created`;
+         alert(msg);
+         console.error(msg);
+         console.error(TaskHandler.tasks[uid]);
       } else {
          this.#addTaskToStorage(uid, task);
       }
@@ -69,16 +70,24 @@ export default class TaskHandler {
       return TaskHandler.tasks[uid];
    }
 
-   // update
    updateTask(uid, task) {
-      if (this.#checkIfTaskAlreadyExists(uid)) {
+      if (TaskHandler.tasks[uid]) {
          this.#addTaskToStorage(uid, task);
       } else {
-         alert(`Task UID: ${uid} does not exist. Task was not updated.`);
-         console.error(`Task UID: ${uid} does not exist.`);
+         msg = `Task UID: ${uid} does not exist. Task was not updated.`;
+         alert(msg);
+         console.error(msg);
          console.error(task);
       }
    }
 
-   // delete
+   deleteTask(uid) {
+      if (TaskHandler.tasks[uid]) {
+         this.#deleteTaskFromStorage(uid);
+      } else {
+         msg = `Task UID: ${uid} does not exist. Nothing to delete`;
+         alert(msg);
+         console.error(msg);
+      }
+   }
 }
