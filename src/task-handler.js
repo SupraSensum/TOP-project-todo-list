@@ -42,28 +42,31 @@ export default class TaskHandler {
       dueDate = '',
       priority = null,
       notes = '',
+      checklist = '',
       projects = [],
       completed = false,
    }) {
+      const uid = this.#createTaskUID(dueDate);
+
+      if (TaskHandler.tasks[uid]) {
+         const msg = `Task UID: ${uid} already exists. Task was not created`;
+         alert(msg);
+         console.error(msg, TaskHandler.tasks[uid]);
+         return;
+      }
+
       const task = {
          title,
          description,
          dueDate,
          priority,
          notes,
+         checklist,
          projects,
          completed,
       };
-      const uid = this.#createTaskUID(dueDate);
 
-      if (TaskHandler.tasks[uid]) {
-         msg`Task UID: ${uid} already exists. Task was not created`;
-         alert(msg);
-         console.error(msg);
-         console.error(TaskHandler.tasks[uid]);
-      } else {
-         this.#addTaskToStorage(uid, task);
-      }
+      this.#addTaskToStorage(uid, task);
    }
 
    getTask(uid) {
