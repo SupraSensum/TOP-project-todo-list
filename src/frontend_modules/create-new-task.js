@@ -79,7 +79,7 @@ function createForm() {
       font-size: 16px;
       color: #333;
       overflow: auto;
-      border: 3px solid red;
+      width: 100%;
    `;
    const titleInput = document.createElement('input');
    titleInput.type = 'text';
