@@ -1,8 +1,13 @@
-import createBlurLayer from "./create-blur-layer";
+import BlurLayer from "./blur-layer.js";
+import TaskHandler from "../backend_modules/task-handler";
 
 export default function () {
+   createNewTaskBox();
+}
+
+function createNewTaskBox() {
    if (!document.getElementById('newTaskBox')) {
-      createBlurLayer(9998);
+      BlurLayer.create(9998, "overlay");
       const newTaskBox = document.createElement('div');
       newTaskBox.id = "newTaskBox";
       newTaskBox.style.cssText = `
@@ -31,34 +36,23 @@ export default function () {
       header.style.cssText = `
          margin-top: 20px;
       `;
+
       newTaskBox.appendChild(header);
-      
       newTaskBox.appendChild(createForm());
-   
       document.body.appendChild(newTaskBox);
-   
-      console.log('create new task');
    } else {
       console.log('new task already exists');
    }
 }
 
 function createForm() {
+   const taskHandler = new TaskHandler();
    const form = document.createElement('form');
    form.id = "newTaskForm";
    form.onsubmit = (e) => {
       e.preventDefault();
-      const formData = new FormData(form);
-      const title = formData.get('title');
-      const description = formData.get('description');
-      const dueDate = formData.get('dueDate');
-      const priority = formData.get('priority');
-      const notes = formData.get('notes');
-      const checklist = formData.get('checklist');
-      const projects = formData.getAll('projects');
-      const completed = formData.get('completed');
-
-      createTask({
+      const formData = Object.fromEntries(new FormData(form));
+      const {
          title,
          description,
          dueDate,
@@ -67,7 +61,21 @@ function createForm() {
          checklist,
          projects,
          completed,
+      } = formData;
+
+      taskHandler.createTask({
+         title,
+         description: description || '',
+         dueDate,
+         priority,
+         notes: notes || '',
+         checklist: checklist || '',
+         projects: projects.split(','),
+         completed,
       })
+
+      form.reset();
+      closeNewTaskBox();
    };
    form.style.cssText = `
       display: flex;
@@ -85,6 +93,7 @@ function createForm() {
    titleInput.type = 'text';
    titleInput.name = 'title';
    titleInput.placeholder = 'title';
+   titleInput.required = true;
    titleInput.style.cssText = `
       width: 100%;
       height: 40px;
@@ -107,6 +116,7 @@ function createForm() {
    const dueDateInput = document.createElement('input');
    dueDateInput.type = 'date';
    dueDateInput.name = 'dueDate';
+   dueDateInput.required = true;
    dueDateInput.style.cssText = `
       width: 100%;
       height: 40px;
@@ -118,6 +128,7 @@ function createForm() {
    const priorityInput = document.createElement('input');
    priorityInput.type = 'number';
    priorityInput.name = 'priority';
+   priorityInput.required = true;
    priorityInput.style.cssText = `
       width: 100%;
       height: 40px;
@@ -152,6 +163,7 @@ function createForm() {
    projectsInput.type = 'text';
    projectsInput.name = 'projects';
    projectsInput.placeholder = 'projects';
+   projectsInput.required = true;
    projectsInput.style.cssText = `
       width: 100%;
       height: 40px;
@@ -164,6 +176,20 @@ function createForm() {
    completedInput.type = 'checkbox';
    completedInput.name = 'completed';
 
+   const submitButton = document.createElement('button');
+   submitButton.type = 'submit';
+   submitButton.textContent = 'Submit';
+   submitButton.style.cssText = `
+      width: 100%;
+      height: 40px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+   `;
+
    form.appendChild(titleInput);
    form.appendChild(descriptionInput);
    form.appendChild(dueDateInput);
@@ -172,7 +198,12 @@ function createForm() {
    form.appendChild(checklistInput);
    form.appendChild(projectsInput);
    form.appendChild(completedInput);
-   form.appendChild(document.createElement('button'), { type: 'submit' });
+   form.appendChild(submitButton);
 
    return form;
+}
+
+function closeNewTaskBox() {
+   document.getElementById('newTaskBox').remove();
+   BlurLayer.remove("overlay");
 }
