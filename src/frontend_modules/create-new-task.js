@@ -3,13 +3,6 @@ import TaskHandler from "../backend_modules/task-handler";
 
 export default function () {
    createNewTaskBox();
-   const handleEscapeKey = (e) => {
-      if (e.key === 'Escape') {
-         document.removeEventListener('keydown', handleEscapeKey);
-         closeNewTaskBox();
-      }
-   };
-   document.addEventListener('keydown', handleEscapeKey);
 }
 
 function createNewTaskBox() {
@@ -44,12 +37,19 @@ function createNewTaskBox() {
          margin-top: 20px;
       `;
 
+      document.addEventListener('keydown', handleEscapeKey);
       newTaskBox.appendChild(createCloseButton());
       newTaskBox.appendChild(header);
       newTaskBox.appendChild(createForm());
       document.body.appendChild(newTaskBox);
    } else {
       console.log('new task already exists');
+   }
+}
+
+function handleEscapeKey(e) {
+   if (e.key === 'Escape') {
+      closeNewTaskBox();
    }
 }
 
@@ -231,6 +231,7 @@ function createForm() {
 }
 
 function closeNewTaskBox() {
+   document.removeEventListener('keydown', handleEscapeKey);
    document.getElementById('newTaskBox').remove();
    BlurLayer.remove("overlay");
 }
