@@ -8,10 +8,8 @@ const DEBUG = true;
 const taskHandler = new TaskHandler();
 const homeButton = document.getElementById('homeButton');
 const viewAllProjectsButton = document.getElementById('viewAllProjectsButton');
-const createNewTaskButton = document.getElementById('addTaskButton');
 
 homeButton.addEventListener('click', () => loadHomePage());
-createNewTaskButton.addEventListener('click', () => createNewTask());
 viewAllProjectsButton.addEventListener('click', () => viewAllProjects());
 
 loadHomePage();
