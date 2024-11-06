@@ -1,12 +1,18 @@
 import StyleVariables from "./style-variables.js";
 import createNewTask from "./create-new-task.js";
+import { createTaskList } from "./create-task-list.js";
+
+import "./sidebar.css";
 
 export default function () {
    const sidebar = document.getElementById("sidebar");
    sidebar.style.backgroundColor = StyleVariables.celadon;
-   
-   sidebar.appendChild(createAddTaskButton());
 
+   sidebar.append(
+      createAddTaskButton(),
+      createTaskList(),
+   );
+   
    console.log('sidebar');
 }
 

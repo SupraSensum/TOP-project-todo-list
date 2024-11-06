@@ -1,5 +1,6 @@
 import BlurLayer from "./blur-layer.js";
 import TaskHandler from "../backend_modules/task-handler";
+import { updateTaskList } from "./create-task-list.js";
 import "./create-new-task.css";
 
 export default function () {
@@ -76,7 +77,7 @@ function createTaskForm() {
    form.onsubmit = (e) => {
       e.preventDefault();
       taskHandler.createTask(getFormData(form));
-
+      updateTaskList();
       form.reset();
       closeNewTaskBox();
    };
@@ -86,6 +87,7 @@ function createTaskForm() {
    titleInput.name = 'title';
    titleInput.placeholder = 'title';
    titleInput.required = true;
+   titleInput.maxLength = 30;
    titleInput.classList.add('normalFormField');
 
    const descriptionInput = document.createElement('textarea');
