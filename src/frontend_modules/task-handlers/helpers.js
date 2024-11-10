@@ -1,46 +1,53 @@
-import BlurLayer from "./blur-layer.js";
-import TaskHandler from "../backend_modules/task-handler";
-import { updateTaskList } from "./create-task-list.js";
-import "./create-new-task.css";
+import BlurLayer from "../blur-layer.js";
+import TaskHandler from "../../backend_modules/task-handler.js";
+import { updateTaskList } from "../create-task-list.js";
 
-export default function () {
-   createNewTaskBox();
-}
+export function createTaskBox(taskBoxId, headerText) {
+   if (!document.getElementById(taskBoxId)) {
+      const taskFormId = `${taskBoxId}Form`;
+      const closeButtonId = `${taskBoxId}CloseButton`;
 
-function createNewTaskBox() {
-   if (!document.getElementById('newTaskBox')) {
       BlurLayer.create(9998, "overlay");
 
-      const newTaskBox = document.createElement('div');
-      newTaskBox.id = "newTaskBox";
+      const taskBoxElement = document.createElement('div');
+      taskBoxElement.id = taskBoxId;
+      taskBoxElement.classList.add('taskBox');
 
       const header = document.createElement('h2');
-      header.textContent = 'Create New Task';
+      header.textContent = headerText;
 
-      document.addEventListener('keydown', handleEscapeKey);
+      const closeButton = createCloseButton(closeButtonId);
+      closeButton.onclick = () => closeTaskBox(taskBoxId);
 
-      newTaskBox.append(
-         createCloseButton(),
+      const handleEscape = handleEscapeKey(taskBoxId);
+      document.addEventListener('keydown', handleEscape);
+      taskBoxElement.handleEscape = handleEscape; // Store the reference to remove it later
+
+      taskBoxElement.append(
+         closeButton,
          header,
-         createTaskForm()
+         createTaskForm(taskFormId, taskBoxId)
       );
-      document.body.appendChild(newTaskBox);
+
+      return taskBoxElement;
    } else {
-      console.log('new task already exists');
+      console.log('task box already exists');
    }
 }
 
-function handleEscapeKey(e) {
-   if (e.key === 'Escape') {
-      closeNewTaskBox();
-   }
+function handleEscapeKey(taskBoxId) {
+   return function (e) {
+      if (e.key === 'Escape') {
+         closeTaskBox(taskBoxId);
+      }
+   };
 }
 
-function createCloseButton() {
+function createCloseButton(closeButtonId) {
    const closeButton = document.createElement('button');
-   closeButton.id = "closeButton";
+   closeButton.classList.add('closeButton');
+   closeButton.id = closeButtonId;
    closeButton.textContent = 'X';
-   closeButton.onclick = closeNewTaskBox;
    return closeButton;
 }
 
@@ -69,17 +76,18 @@ function getFormData(form) {
    };
 }
 
-function createTaskForm() {
+function createTaskForm(taskFormId, taskBoxId) {
    const taskHandler = new TaskHandler();
 
    const form = document.createElement('form');
-   form.id = "newTaskForm";
+   form.classList.add('taskForm');
+   form.id = taskFormId;
    form.onsubmit = (e) => {
       e.preventDefault();
       taskHandler.createTask(getFormData(form));
       updateTaskList();
       form.reset();
-      closeNewTaskBox();
+      closeTaskBox(taskBoxId);
    };
 
    const titleInput = document.createElement('input');
@@ -147,8 +155,29 @@ function createTaskForm() {
    return form;
 }
 
-function closeNewTaskBox() {
-   document.removeEventListener('keydown', handleEscapeKey);
-   document.getElementById('newTaskBox').remove();
-   BlurLayer.remove("overlay");
+function closeTaskBox(taskBoxId) {
+   const taskBoxElement = document.getElementById(taskBoxId);
+   if (taskBoxElement) {
+      const handleEscape = taskBoxElement.handleEscape;
+      document.removeEventListener('keydown', handleEscape);
+      taskBoxElement.remove();
+      BlurLayer.remove("overlay");
+   }
+}
+
+export function test(loops = 100) {
+   for (let i = 0; i < loops; i++) {
+      const formData = {
+         title: `Task ${i}`,
+         description: '',
+         dueDate: new Date().toISOString().split('T')[0],
+         priority: i % 3 + 1,
+         notes: '',
+         checklist: '',
+         projects: ['test'],
+         completed: false,
+      };
+      taskHandler.createTask(formData);
+      updateTaskList();
+   }
 }

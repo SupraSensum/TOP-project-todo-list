@@ -15,8 +15,14 @@ export default class TaskHandler {
    }
 
    #createTaskUID(dueDate) {
-      const currentDateTime = new Date().toISOString().replace(/[^\w]/gi, '');
-      return `${currentDateTime}-${dueDate.replace(/[^\w]/gi, '')}`;
+      const baseUID = `${new Date().toISOString().replace(/[^\w]/gi, '')}-${dueDate.replace(/[^\w]/gi, '')}`;
+      let uid = baseUID;
+      let counter = 1;
+      while (TaskHandler.tasks[uid]) {
+         uid = `${baseUID}-${counter}`;
+         counter++;
+      }
+      return uid;
    }
 
    #addTaskToStorage(uid, task) { // notice the singular 'task' and not 'tasks', lol

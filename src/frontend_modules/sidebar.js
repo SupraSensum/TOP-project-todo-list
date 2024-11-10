@@ -1,5 +1,5 @@
 import StyleVariables from "./style-variables.js";
-import createNewTask from "./create-new-task.js";
+import createNewTask from "./task-handlers/create-new-task.js";
 import { createTaskList } from "./create-task-list.js";
 
 import "./sidebar.css";

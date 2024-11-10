@@ -1,4 +1,4 @@
-#newTaskBox {
+.taskBox {
    position: fixed;
    top: 50%;
    left: 50%;
@@ -19,11 +19,11 @@
    color: #333;
 }
 
-#newTaskBox h2 {
+.taskBox h2 {
    margin-top: 20px;
 }
 
-#closeButton {
+.closeButton {
    position: absolute;
    top: 2px;
    left: 5px;
@@ -36,7 +36,7 @@
    font-weight: 600;
 }
 
-#newTaskForm {
+.taskForm {
    display: flex;
    flex-direction: column;
    align-items: center;
@@ -65,7 +65,7 @@
    border: 1px solid #ccc;
 }
 
-#newTaskBox button[type="submit"] {
+.taskBox button[type="submit"] {
    width: 100%;
    height: 40px;
    padding: 10px;
