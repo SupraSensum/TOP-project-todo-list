@@ -1,8 +1,10 @@
 import TaskHandler from "../backend_modules/task-handler.js";
+import "./create-task-list.css";
 
 export function createTaskList() {
    const taskList = document.createElement('ul');
    taskList.id = "taskList";
+   taskList.classList.add('taskList');
 
    return taskList;
 }
