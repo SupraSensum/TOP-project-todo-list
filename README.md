@@ -1,5 +1,30 @@
 # TOP-project-todo-list
 
+## To do
+
+- [ ] Each `todo` should be an object; use classes; need to refactor current implementation
+- [ ] Give each `todo` the following properties:
+  - [ ] title
+  - [ ] description
+  - [ ] dueDate
+  - [ ] priority
+  - [ ] notes
+  - [ ] checklist
+  - [ ] projects
+  - [ ] completed
+- [ ] Todo app should open to a default `project`
+- [ ] Separate application logic into modules
+- [ ] User interface should be able to:
+  - [ ] View all projects
+  - [ ] View all todos in each project (probably just the title and duedate… perhaps changing color for different priorities)
+  - [ ] Expand a single todo to see/edit its details
+  - [ ] Delete a todo
+- [ ] Use other npm libraries, like
+  - [ ] [date-fns](https://github.com/date-fns/date-fns) for formatting and manipulating dates and times
+- [ ] Persistent storage
+  - [ ] `localStorage`
+  - [ ] app should check first if `localStorage` is available and prompt user to load it
+
 ## What are we trying to show off here?
 
 - [ ] classes
